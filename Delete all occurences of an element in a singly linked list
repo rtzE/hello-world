@@ -1,0 +1,137 @@
+#include<stdio.h>
+#include<stdlib.h>
+typedef struct nodetype
+{
+	int value;
+	struct nodetype *next;
+}node;
+
+	void insert(node **head,int x);
+	void deleteAll(node **head,int key);
+	void display(node *head);
+	
+void main()
+{
+	
+	int s,choice,item;
+	node *head=NULL;
+	while(1)
+	{
+		
+				printf("\n------MENU----\n");
+				printf("The Choices are:\n 1.Insert an element\n 2.Delete an element\n 3.Display the list\n");
+				printf("Enter your choice");
+				scanf("%d",&s);
+		switch(s)
+		{
+			case 1:printf("Enter the element");
+					scanf("%d",&choice);
+					insert(&head,choice);
+					break;
+			
+			case 2: printf("Enter the element to be deleted\t");
+					scanf("%d",&item);
+					deleteAll(&head,item);
+					break;
+			
+			case 3:display(head);
+					break;
+			
+			case 4 :exit(1);
+					break;
+			
+			default:printf("Invalid option");		
+		}
+		
+		
+	}
+	
+	
+}
+
+void insert(node **head, int x)
+{
+		node *ptr;
+		ptr=(node*)malloc(sizeof(node));
+		ptr->value=x;
+		
+	if((*head)==NULL)
+		{
+			
+			ptr->next=NULL;
+			(*head)=ptr;
+		}
+	else
+		{
+			ptr->next=(*head);
+			(*head)=ptr;
+		}
+}
+
+void deleteAll(node **head, int key)
+	
+{
+		node *temp,*prev,*chck;
+		temp=*head;
+		chck=*head;
+			if(*head==NULL)
+		{
+			printf("List is Empty");
+			return;
+		}
+		while(chck!=NULL && chck->value!=key)
+		{
+			chck=chck->next;
+			
+			
+		}
+		if(chck==NULL)
+		{
+			printf("Element is not present");
+			return;
+		}
+	
+	
+	while(temp!=NULL&& temp->value==key)
+		{
+			*head=temp->next;
+			free(temp);
+			temp=*head;
+			
+		}
+	while(temp!=NULL)
+		{
+			while(temp!=NULL && temp->value!=key)
+				{
+					prev=temp;
+					temp=temp->next;
+				}
+			if(temp==NULL)
+			{
+			return;
+		    }
+	
+			prev->next=temp->next;
+			free(temp);
+			temp=prev->next;
+		
+		}
+}
+
+void display(node *head)
+{
+	if(head==NULL)
+		{
+			printf("The List is Empty");
+			return;
+		}
+		
+	while(head!=NULL)
+		{
+			printf("%d\t",head->value);
+			head=head->next;
+		}
+}
+	
+	
+
